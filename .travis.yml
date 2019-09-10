@@ -1,0 +1,10 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -f client/Dockerfile.dev -t tonymontaro/tut-multi-docker ./client
+
+script:
+  - docker run -e CI=true tonymontaro/tut-multi-docker npm run test -- --coverage

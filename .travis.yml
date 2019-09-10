@@ -8,3 +8,10 @@ before_install:
 
 script:
   - docker run -e CI=true tonymontaro/tut-multi-docker npm run test -- --coverage
+
+after_success:
+  - docker build -f client/Dockerfile.dev -t tonymontaro/tut-multi-docker-client ./client
+  # Login to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push image(s) to docker hub
+  - docker push tonymontaro/tut-multi-docker-client

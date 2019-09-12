@@ -11,7 +11,13 @@ script:
 
 after_success:
   - docker build -f client/Dockerfile.dev -t tonymontaro/tut-multi-docker-client ./client
+  - docker build -f client/Dockerfile.dev -t tonymontaro/tut-multi-docker-nginx ./nginx
+  - docker build -f client/Dockerfile.dev -t tonymontaro/tut-multi-docker-server ./server
+  - docker build -f client/Dockerfile.dev -t tonymontaro/tut-multi-docker-worker ./worker
   # Login to docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Push image(s) to docker hub
   - docker push tonymontaro/tut-multi-docker-client
+  - docker push tonymontaro/tut-multi-docker-nginx
+  - docker push tonymontaro/tut-multi-docker-server
+  - docker push tonymontaro/tut-multi-docker-worker
